@@ -1,0 +1,2 @@
+swift taytay.swift [\"$HOME/Sources/Death-Mask/\",\ \"$HOME/Sources/Death-Mask/include/FlameSteelFramework/FlameSteelCore\",\ \"$HOME/Sources/Death-Mask/include/FlameSteelFramework/FlameSteelEngineGameToolkit\",\ \"$HOME/Sources/Death-Mask/include/FlameSteelFramework/FlameSteelEngineGameToolkitAlgorithms\",\ \"$HOME/Sources/Death-Mask/include/FlameSteelFramework/FlameSteelEngineGameToolkitFSGL\",\ \"$HOME/Sources/Death-Mask/include/FlameSteelFramework/FSGL\",\ \"$HOME/Sources/Death-Mask/include/FlameSteelFramework/FlameSteelSpiderToolkit\"]
+
