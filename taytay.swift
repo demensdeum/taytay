@@ -1,5 +1,7 @@
 import Foundation
 
+let argumentExample = "[\\\"/home/demensdeum/Sources/gitreposity1\\\",\\ \\\"/home/demensdeum/Sources/gitreposity2\\\"]"
+
 fileprivate func directoryExistsAtPath(_ path: String) -> Bool {
     var isDirectory = ObjCBool(true)
     let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
@@ -95,7 +97,7 @@ final class RepositoryController {
 print("Welcome to TayTay v1.0 - fast, simple source control tool.")
 
 if CommandLine.arguments.count != 2 {
-	print("Wrong arguments! Shake It Off! You should call taytay that way: taytay [\\\"/home/demensdeum/Sources/gitreposity1\\\",\\ \\\"/home/demensdeum/Sources/gitreposity2\\\"]\nYour arguments:\(CommandLine.arguments)")
+	print("Wrong arguments! Shake It Off! You should call taytay that way: taytay \(argumentExample)\nYour arguments:\(CommandLine.arguments)")
 	exit(1)
 }
 
@@ -106,7 +108,7 @@ var repositories = [String]()
 do {
 	repositories = try JSONSerialization.jsonObject(with: data, options: []) as? [String] ?? []
 } catch {
-	print("JSON parsing error: \(error); I guess it's in wrong format, check \" symbol escapes, space must be escaped also. Here is your argument:\n\(repositoriesString)\nMust be something like:\n[\\\"/home/demensdeum/Sources/gitreposity1\\\",\\ \\\"/home/demensdeum/Sources/gitreposity2\\\"]\nBegin Again")
+	print("JSON parsing error: \(error); I guess it's in wrong format, check \" symbol escapes, space must be escaped also. Here is your argument:\n\(repositoriesString)\nMust be something like:\n\(argumentExample)\nBegin Again")
 	exit(6)
 }
 
