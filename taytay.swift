@@ -49,6 +49,7 @@ final class RepositoryController {
 	enum RepositoryControllerResult {
 		case nothingToCommit
 		case somethingToCommit
+		case somethingToPush
 	}
 
 	private var path: String
@@ -67,7 +68,11 @@ final class RepositoryController {
 			print("No output from git command, for path: \(path)")
 			exit(2) 
 		}
-		if result.contains("nothing to commit") {
+		
+		if result.contains("Your branch is ahead of") {
+			return RepositoryControllerResult.somethingToPush
+		}
+		else if result.contains("nothing to commit") {
 			return RepositoryControllerResult.nothingToCommit
 		}
 		else {
@@ -83,6 +88,10 @@ final class RepositoryController {
 			case .somethingToCommit:
 				print("Something to commit at path: \(path)")
 				runSourceControlTool()
+				
+			case .somethingToPush:
+				print("Something to push at path: \(path)")
+				runSourceControlTool()
 		}
 	}
 
@@ -94,10 +103,10 @@ final class RepositoryController {
 	}
 }
 
-print("Welcome to TayTay v1.0 - fast, simple source control tool.")
+print("Welcome to TayTay v1.1 - fast, simple source control tool.")
 
 if CommandLine.arguments.count != 2 {
-	print("Wrong arguments! Shake It Off! You should call taytay that way: taytay \(argumentExample)\nYour arguments:\(CommandLine.arguments)")
+	print("Wrong arguments! Shake It Off! You should call taytay that way: taytay \(argumentExample)\nYour arguments:\(CommandLine.arguments[1])")
 	exit(1)
 }
 
@@ -118,9 +127,12 @@ if (repositories.count < 1) {
 }
 
 for repository in repositories {
-	let repositoryController = RepositoryController(path: repository)
-	let result = repositoryController.checkStatus()
-	repositoryController.handle(result: result)
+	for tries in 1...2 {
+		print("Check repository status try \(tries)")
+		let repositoryController = RepositoryController(path: repository)
+		let result = repositoryController.checkStatus()
+		repositoryController.handle(result: result)
+	}
 }
 
 print("Bye-Bye!")
