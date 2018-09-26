@@ -24,7 +24,7 @@ final class Shell
     
     private func executeShell(command: String, arguments: [String] = []) -> String? {
         let task = Process()
-        task.executableURL = URL(string: command)
+        task.executableURL = URL(fileURLWithPath: command)
         task.arguments = arguments
         
         let pipe = Pipe()
@@ -64,7 +64,7 @@ final class RepositoryController {
 
 	func checkStatus() -> RepositoryControllerResult {
 		FileManager.default.changeCurrentDirectoryPath(path)
-		guard let result = Shell().outputOf(commandName: "git", arguments: ["status","."]) else { 
+		guard let result = Shell().outputOf(commandName: "/usr/bin/git", arguments: ["status","."]) else { 
 			print("No output from git command, for path: \(path)")
 			exit(2) 
 		}
